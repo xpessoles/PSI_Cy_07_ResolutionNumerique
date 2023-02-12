@@ -22,12 +22,8 @@
 
 \def\xxfigures{
 %\includegraphics[width=0.6\textwidth]{lola}\\
-\textit{Robot humanoïde Lola}
+%\textit{Robot humanoïde Lola}
 
-\vspace{.5cm}
-
-\includegraphics[width=0.5\textwidth]{simu}\\
-%\textit{Simulateur de vol Lockheed Martin}
 }%figues de la page de garde%figues de la page de garde
 
 \input{\repStyle/new_pagegarde}
@@ -45,7 +41,7 @@
 
 \subsection{Principe des méthodes des rectangles}
 %\subsection{Principe}
-\begin{defi}
+\begin{defi}{Méthode des rectangles}
 Dans cette méthode, la fonction à intégrer est interpolée par un polynôme de degré 0, à savoir une fonction constante. Géométriquement, l'aire sous la courbe est alors approximée par un rectangle. Plusieurs choix sont possibles.
 
 \begin{minipage}[c]{.3\linewidth}
@@ -105,7 +101,7 @@ $$
 
 \subsection{Principe des méthodes des trapèzes}
 \begin{minipage}[c]{.7\linewidth}
-\begin{defi}
+\begin{defi}{Méthode des trapèzes}
 Dans cette méthode, la fonction à intégrer est interpolée par un polynôme de degré 1, à savoir une fonction affine. Géométriquement, l'aire sous la courbe est alors approximée par un trapèze :
 
 $$
@@ -134,7 +130,7 @@ Si de plus $f$ est deux fois dérivables sur $I=[a,b]$ et $f''$ est continue sur
 
 \textbf{Erreur sur la méthode des trapèzes}
 
-L'erreur commise$\varepsilon$ est telle qu'il existe un entier $M$ tel que $ \varepsilon \leq \dfrac{M}{12n^2}$.
+L'erreur commise $\varepsilon$ est telle qu'il existe un entier $M$ tel que $ \varepsilon \leq \dfrac{M}{12n^2}$.
 
 \end{resultat}
 \newpage
