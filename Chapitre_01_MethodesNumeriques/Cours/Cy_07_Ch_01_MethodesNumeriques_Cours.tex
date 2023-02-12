@@ -165,14 +165,14 @@ Il est possible de résoudre l'équation $f(x)=0$ en utilisant les modules de la
 \begin{py}
 \begin{minipage}[c]{.45\linewidth}
 Résolution de $\sin(x)=0$ avec 0,5 comme valeur d'initialisation.
-\begin{python}
+\begin{lstlisting}
 def f(x):
     return sin(x)
    
 sol = newton(f,0.5)
 print(sol)
 print(f(sol))
-\end{python}
+\end{lstlisting}
 
 Résolution du système : 
 $$
@@ -308,7 +308,6 @@ Si de plus $f$ est deux fois dérivables sur $I=[a,b]$ et $f''$ est continue sur
 L'erreur commise $\varepsilon$ est telle qu'il existe un entier $M$ tel que $ \varepsilon \leq \dfrac{M}{12n^2}$.
 
 \end{resultat}
-\newpage
 
 \subsection*{Bibliothèque Python}
 Il est possible d'intégrer une fonction en utilisant les modules de la bibliothèque \texttt{scipy} :
