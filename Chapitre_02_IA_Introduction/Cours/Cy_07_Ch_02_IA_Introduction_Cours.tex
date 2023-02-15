@@ -58,7 +58,7 @@
 
 \subsection{Premières définitions -- IA, données}
 %\subsection{Première approche. Que veut-on ? Qu'obtient-on ?}
-\begin{defi}[Intelligence Artificielle]
+\begin{defi}{Intelligence Artificielle}
 Wikipedia -- L'intelligence artificielle (IA) est « l'ensemble des théories et des techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence ». 
 \end{defi}
 
@@ -95,7 +95,7 @@ On remarquera sur l'exemple de gauche que l'algorithme parvient à identifier su
 
 
 Pour utiliser un algorithme d'IA il est nécessaire de disposer de données... en général beaucoup de données. 
-\begin{defi}[Données]
+\begin{defi}{Données}
 Les données utilisées par un algorithme d'IA peuvent être sous différentes formes : 
 \begin{itemize}
 \item des données quantitatives continues qui peuvent prendre n'importe quelles valeurs dans un ensemble de valeurs (par exemple la température);
@@ -142,7 +142,7 @@ Dans le cas de la base de donnée des Iris, présente par exemple dans \texttt{s
 \end{exemple}
 
 
-\begin{defi}[Big data -- Wikipedia]
+\begin{defi}{Big data -- Wikipedia}
 Mégadonnées ou données massives. Le big data désigne les ressources d’informations dont les caractéristiques en termes de volume, de vélocité et de variété imposent l’utilisation de technologies et de méthodes analytiques particulières pour générer de la valeur, et qui dépassent en général les capacités d'une seule et unique machine et nécessitent des traitements parallélisés.
 \end{defi}
 
@@ -158,7 +158,7 @@ Si ce lien n'est pas connu, on parle d'apprentissage non supervisé ou de cluste
 
 
 
-\begin{defi}[Apprentissage automatique -- Machine learning]
+\begin{defi}{Apprentissage automatique -- Machine learning}
 L'apprentissage automatique est un champ de l'intelligence artificielle dont l'objectif est d'analyser un grand volume de
 données afin de déterminer des motifs et de réaliser un modèle prédictif. 
 
@@ -181,11 +181,11 @@ L’entraînement peut être poursuivi même en phase de production.
 \end{exemple}
 
 
-\begin{defi}[Apprentissage supervisé -- Apprentissage]
+\begin{defi}{Apprentissage supervisé -- Apprentissage}
 Tâche d'apprentissage au cours duquel l'algorithme (ou fonction de prédiction) va, à partir d'un ensemble de données \textbf{étiquetées}, déterminer un lien entre un ensemble les données et les étiquettes. 
 \end{defi}
 
-\begin{defi}[Apprentissage supervisé -- Inférence]
+\begin{defi}{Apprentissage supervisé -- Inférence}
 Tâche au cours duquel l'algorithme (ou fonction de prédiction) va, à partir d'un ensemble de données \textbf{non étiquetées}, prédire l'étiquette.
 
 \end{defi}
@@ -205,7 +205,7 @@ Soit un ensemble d'images en noir et blanc représentant des chiffres de 0 à 9.
 Dans un second temps, l'algorithme devra déterminer le chiffre en fonction d'une image seule.
 \end{exemple}
 
-\begin{defi}[Apprentissage non supervisé -- Clustering]
+\begin{defi}{Apprentissage non supervisé -- Clustering}
 Tâche d'apprentissage au cours duquel l'algorithme (ou fonction de prédiction) va, à partir d'un ensemble de données \textbf{non étiquetées}, déterminer un lien entre les données (et les regrouper). 
 \end{defi}
 
@@ -229,7 +229,7 @@ On remarque (lorsque l'image est en couleur) que sur des mesures sur 150 iris, l
 \end{exemple}
 
 
-\begin{defi}[Apprentissage par renforcement]
+\begin{defi}{Apprentissage par renforcement}
 Si au cours de l'apprentissage supervisé, un mécanisme de récompense est mis en \oe{}uvre pour améliorer les performances du modèle, on parle d'apprentissage par renforcement.
 \end{defi}
 
@@ -245,7 +245,7 @@ On peut donc faire une synthèse des méthodes d'apprentissage dont nous avons p
 
 \subsection{Encore des définitions...}
 
-\begin{defi}[Classification]
+\begin{defi}{Classification}
 En apprentissage automatique, on appelle problème de classification les problèmes ou les étiquettes sont discrètes.
 \end{defi}
 
@@ -260,7 +260,7 @@ Dans le cas où nous souhaitons regrouper par forme, il s'agit d'un problème de
 Il serait aussi possible d'opérer un regroupement par couleur. Les classes seraient donc différentes.
 \end{exemple}
 
-\begin{defi}[Régression]
+\begin{defi}{Régression}
 En apprentissage automatique, on appelle problème de régression les problèmes ou les étiquettes sont continues.
 \end{defi}
 
@@ -291,7 +291,7 @@ Lors d'un problème de classification, il est par exemple possible de détermine
 
 
 
-\begin{defi}[Valeur prédictive positive]
+\begin{defi}{Valeur prédictive positive}
 Valeur prédictive positive (\textit{accuracy classification score}) :
 $$
 \text{Justesse} = \dfrac{\text{Nombre de prédictions vraies}}{\text{Nombre de prédictions totales}}.
@@ -310,7 +310,7 @@ print(skm.accuracy_score(Y, Y_pred))
 
 
 
-\begin{defi}[Matrices de confusion]
+\begin{defi}{Matrices de confusion}
 La matrice de confusion est une métrique permettant de déterminer la qualité d'une classification. En abscisses sont indiquées le valeurs réelles, et on ordonnée les valeurs prédites. 
 \end{defi}
 \begin{exemple}~\\
@@ -334,7 +334,7 @@ La matrice de confusion présentée est dite non-normalisée. Si la répartition
 \end{rem}
 
 \subsubsection{Critères de validation des problèmes de régression}
-\begin{defi}[Erreur moyenne quadratique]
+\begin{defi}{Erreur moyenne quadratique}
 Appelée également \textit{mean squared error}, il s'agit d'une moyenne d'écart au carré : 
 $$
 msq = \dfrac{1}{N} \sum\limits_{i=1}^n \left|\left|Y_i - \hat{Y}_i \right|\right|^2
@@ -379,7 +379,7 @@ Dans le cadre d'une classification, où \texttt{r} résultats sont possibles. On
 \url{https://scikit-learn.org/stable/modules/preprocessing.html}
 
 \subsubsection{Séparation des données}
-
+{
 Lors du démarrage d'un apprentissage supervisé, on dispose d'un jeu de données comprenant les données d'entrée et les cibles correspondantes. Il est d'usage de séparer ces données en deux parties :
 \begin{itemize}
 \item les données d’entraînement permettant... d’entraîner le modèle. Dans la pratique on utilise entre 60 et 80\,\% des données de base;
@@ -709,14 +709,14 @@ plt.show()
 
 %Exemples : 
 %\url{https://makina-corpus.com/blog/metier/2017/initiation-au-machine-learning-avec-python-pratique}
-\subsection{Pour aller (un peu) plus loin}
-\texttt{scikit-learn} propose des algorithmes plus efficaces que les $k$ plus proches voisins pour réaliser des classifications. 
-
-La figure suivant représente une vue d'ensemble des algorithmes utilisables en fonction des problèmes rencontrés. 
-
-\begin{center}
-\includegraphics[width=.8\linewidth]{fig_09}
-\end{center}
+%\subsection{Pour aller (un peu) plus loin}
+%\texttt{scikit-learn} propose des algorithmes plus efficaces que les $k$ plus proches voisins pour réaliser des classifications. 
+%
+%La figure suivant représente une vue d'ensemble des algorithmes utilisables en fonction des problèmes rencontrés. 
+%
+%\begin{center}
+%\includegraphics[width=.8\linewidth]{fig_09}
+%\end{center}
 \begin{thebibliography}{2}
    \bibitem[1]{ref1} Éric Biernat et Michel Lutz. {\it Data science : fondamentaux et études de cas.} Eyrolles.
 \end{thebibliography}
