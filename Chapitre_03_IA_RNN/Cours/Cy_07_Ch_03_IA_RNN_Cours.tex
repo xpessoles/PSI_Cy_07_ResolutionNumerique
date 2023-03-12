@@ -51,9 +51,9 @@
 \section{Introduction}
 
 \subsection{Bref historique}
-Dans les années 40, les chercheurs tentent de fabriquer une machine capable d'apprendre à partir de données fournies, de mémoriser des informations et de traiter des informations incomplètes. Pour cela, ils essayent de réaliser des modèles mathématiques de neurones biologiques. S'en suit alors la naissance des premiers modèles de perceptrons. 
+Dans les années 1940, les chercheurs tentent de fabriquer une machine capable d'apprendre à partir de données fournies, de mémoriser des informations et de traiter des informations incomplètes. Pour cela, ils essayent de réaliser des modèles mathématiques de neurones biologiques. S'en suit alors la naissance des premiers modèles de perceptrons. 
 
-L'apprentissage automatisé va alors connaître des hauts et des bas, au gré des avancées scientifiques et technologiques. Dans les années 60, un des premiers coups d'arrêt fût provoqué par la non-capacité des réseaux de neurones à traiter des problèmes non linéaires. Dans les années 80, la rétroproagation du gradient fut proposée. Mais devant le manque de capacité des ordinateurs, la recherche marquât un second coup d'arrêt. Dans les années 90/2000, l'apparition des réseaux convolutifs et leur capacité à analyser les données des images relançât alors les recherches dans ce domaine.
+L'apprentissage automatisé va alors connaître des hauts et des bas, au gré des avancées scientifiques et technologiques. Dans les années 1960, un des premiers coups d'arrêt fût provoqué par la non-capacité des réseaux de neurones à traiter des problèmes non linéaires. Dans les années 1980, la rétroproagation du gradient fut proposée. Mais devant le manque de capacité des ordinateurs, la recherche marquât un second coup d'arrêt. Dans les années 1990/2000, l'apparition des réseaux convolutifs et leur capacité à analyser les données des images relançât alors les recherches dans ce domaine.
 
 \subsection{Exemples d'applications des réseaux de neurones}
 \url{https://fr.wikiversity.org/}
@@ -87,10 +87,10 @@ L'apprentissage automatisé va alors connaître des hauts et des bas, au gré de
 \begin{minipage}[c]{.55\linewidth}
 Prenons la représentation suivante pour un neurone. On note :
 \begin{itemize}
-\item $\mathbf{X}$ le vecteur d'entrée et $x_i$ les données de la couche d'entrée;
+\item $\mathbf{X}$ le vecteur d'entrée constitué des données $x_i$. Ce vecteur constitue la couche d'entrée;
 \item $w_i$ les poids (poids synaptiques);
 \item $b$ le biais;
-\item $z_0$ la somme pondérée des entrée;
+\item $z_0$ la somme pondérée des entrées;
 \item $f$ une fonction d'activation; 
 \item $\tilde{y}_0$ : la valeur de sortie du neurone.
 \end{itemize}
@@ -106,12 +106,12 @@ On a donc, dans un premier temps  :
 $$z_0 = b+ \sum\limits_{i=0}^{n} w_i x_i. $$
 
 Après la fonction d'activation, on a donc en sortie du neurone :
-$$\tilde{y}_0 = f(z_0)=f \left( b+ \sum\limits_{i=0}^{n} w_i x_i\right).$$
+$$\tilde{y}_0 = a_0 = f(z_0)=f \left( b+ \sum\limits_{i=0}^{n} w_i x_i\right).$$
 
 \begin{rem}
 \begin{enumerate}
 \item La notation tilde ($\tilde{y}_0$) vient du fait que la valeur de sortie d'une neurone est une valeur estimée qu'il faudra comparer à ${y}_0$ valeur de l'étiquette utilisée pour l'apprentissage supervisé.
-\item Par la suite, dans la représentation graphique on ne fera pas apparaître la somme pondérée et la fonction d'activation, mais seulement la valeur de sortie du neurone (notée par exemple $a_0$).
+\item Par la suite, dans la représentation graphique on ne fera apparaître ni la somme pondérée ni la fonction d'activation, mais seulement la valeur de sortie du neurone (notée par exemple $a_0$).
 \end{enumerate}
 \end{rem}
 
@@ -169,7 +169,7 @@ Influence des poids et des biais sur la sortie du perceptron en utilisant une fo
 \end{center}
 \end{minipage}
 
-On peut ainsi voir qu'avec la fonction d'activation ReLU, plus le poids sera grand en valeur absolu, plus la neurone amplifiera le signal d'entrée. 
+On peut ainsi voir qu'avec la fonction d'activation ReLU, plus le poids sera grand en valeur absolu, plus le neurone amplifiera le signal d'entrée. 
 
 Le biais permettra de prendre en compte le << niveau >> du signal d'entrée à partir duquel, le signal doit être amplifié, ou non.
 
@@ -224,12 +224,12 @@ $x_0$ & $x_1$ & $z$ & Id. & H. & Sig. & ReLu \\
 
 Un réseau de neurones est un ensemble de neurones reliés, par couches, entre eux. 
 
-Dans un réseau de neurones \textbf{dense} tous les neurones de la couche $i$ seront reliés à tous les neurones de la couche $i+1$.
+Dans un réseau de neurones \textbf{dense} tous les neurones de la couche $i$ sont reliés à tous les neurones de la couche $i+1$.
 
 \begin{itemize}
 \item Couche d'entrée : cette couche est une copie de l'ensemble des données d'entrées. Le nombre de neurones de cette couche correspond donc aux nombre de données d'entrées. On note $\mathbf{X} = \left( x_0, ..., x_n\right)$ le vecteur d'entrées.
 \item Couche cachée (ou couche intermédiaire) : il s'agit d'une couche qui a une utilité intrinsèque au réseau de neurones. Ajouter des neurone dans cette couche (ou ces couches) permet donc d'ajouter de nouveaux paramètres.  Pour une couche, la même fonction d'activation est utilisée pour tous les neurones. En revanche la fonction d'activation utilisée peut être différente pour deux couches différentes. Les fonctions d'activations des couches intermédiaires sont souvent non linéaires.
-\item Couche de sortie : le nombre de neurones de cette couche correspond au nombre de sorties attendues. La fonction d'activation de la couche de sortie est souvent linéaire. On note $\mathbf{Y} = \left( y_0, ..., y_y\right)$ le vecteur des sorties.
+\item Couche de sortie : le nombre de neurones de cette couche correspond au nombre de sorties attendues. La fonction d'activation de la couche de sortie est souvent linéaire. On note $\mathbf{Y} = \left( y_0, ..., y_p\right)$ le vecteur des sorties.
 \end{itemize}
 %\begin{minipage}[c]{.5\linewidth}
 \begin{center}
@@ -298,7 +298,7 @@ Initialisation les poids et le biais avec des valeurs aléatoires : $w_0 = -0,3$
 \end{minipage}
 
 Il est possible d'écrire que 
-$y_0 = a_0^{[1]}$ 
+$y_0 = a_0^{[2]}$ 
 $ = f_2\left(b_0^{[2]}+ w_{00}^{[2]} a_0^{[1]}+ w_{01}^{[2]} a_1^{[1]}\right)$.
 
 Par ailleurs : 
@@ -341,14 +341,14 @@ $\mathbf{\tilde{Y}}$ le vecteur de sortie calculé par le réseau de neurones.
 
 
 L'objectif de la phase d'apprentissage du réseau de neurones est de déterminer les valeurs de  l'ensemble des poids et des biais de telle sorte que l'écart entre $\mathbf{Y}$ 
-et $\mathbf{\tilde{Y}}$ soit minimale.
+et $\mathbf{\tilde{Y}}$ soit minimal.
 \end{obj}
 
 
 
 
 \subsection{Fonction de coût}
-Dans le but de minimiser l'écart entre la sortie du réseau de neurones et la valeur réelle de la sortie, on utilise une fonction coût (ou fonction de perte). Il est possible de définir plusieurs types de fonctions, notamment en fonction du type de problème à traiter (classification ou régression par exemple).
+Dans le but de minimiser l'écart entre la sortie du réseau de neurones et la valeur réelle de la sortie, on utilise une fonction de coût (ou fonction de perte). Il est possible de définir plusieurs types de fonctions, notamment en fonction du type de problème à traiter (classification ou régression par exemple).
 
 \begin{defi}{Fonction coût régression}
 Notons $nb$ le nombre de données dans la base d'entraînement. Dans le cadre d'un problème de régression, on peut définir la fonction coût comme la moyenne des erreurs quadratique entre la valeur donnée par l'équation de propagation et la valeur de l'étiquette :
@@ -368,7 +368,7 @@ L'objectif est dès lors de déterminer les poids et les biais qui minimisent la
 En réutilisant l'exemple ci-contre, nous allons présenter succinctement comment est minimisée la fonction coût.
 Pour cela, il va falloir dériver la fonction coût par rapport à chacune des variables. 
 
-Cherchons uniquement à déterminer le coût que par rapport à un seul vecteur d'entrée du jeu d'entraînement. On a alors : 
+Cherchons uniquement à déterminer le coût par rapport à un seul vecteur d'entrée du jeu d'entraînement. On a alors : 
 \begin{itemize}
 \item $C = \left( \mathbf{\tilde{Y_i}} - \mathbf{Y_i}  \right)^2$ $= \left( a^{[2]}_{0} - y  \right)^2$;
 \item $ a^{[2]}_{0} = f^{[2]}\left(z_0^{[2]}\right)$;
@@ -479,7 +479,7 @@ On réalise de même à la fin de l'epoch suivante etc...
 
 Sur le jeu de validation, l'erreur décroît pendant un certain nombre d'epoch puis augmente. 
 
-Il existe en fait un stade à partir duquel le réseau de neurones se spécialise sur le jeu d’entraînement et devient donc incapable de réaliser des prédictions fiables sur un nouveau je de données. On parle de surentraînement (ou d'overfitting).
+Il existe en fait un stade à partir duquel le réseau de neurones se spécialise sur le jeu d’entraînement et devient donc incapable de réaliser des prédictions fiables sur un nouveau jeu de données. On parle de surentraînement (ou d'overfitting).
  
 \begin{exemple} \textit{Wikipedia} ~\\
 \begin{minipage}[c]{.45\linewidth}
