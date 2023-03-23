@@ -431,8 +431,8 @@ On pourrait ici écrire 9 équations en fonction des différents poids, des biai
 
 \`A partir de cela, on va modifier les poids comme suit : 
 \begin{itemize}
-\item $ w^{[2]}_{00,i+1}=w^{[2]}_{00,i}-\eta  \dfrac{\partial C}{\partial w^{[2]}_{00,i}}$;
-\item $ b^{[2]}_{0,i+1}=b^{[2]}_{0,i}-\eta  \dfrac{\partial C}{\partial b^{[2]}_{0,i}}$.
+\item $ w^{[2]}_{00,i+1}=w^{[2]}_{00,i}-\eta  \left.\dfrac{\partial C}{\partial w^{[2]}_{00}}\right|_{w^{[2]}_{00,i}}$;
+\item $ b^{[2]}_{0,i+1}=b^{[2]}_{0,i}-\eta \left. \dfrac{\partial C}{\partial b^{[2]}_{0}}\right|_{b^{[2]}_{0,i}}$.
 \end{itemize}
 
 On réitère ensuite les opérations précédentes jusqu'à ce que la fonction coût ait été suffisamment réduite.
