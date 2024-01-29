@@ -353,13 +353,13 @@ $$
 $\dfrac{\text{d}y(t_i)}{\text{d}t} \simeq \dfrac{y_{i+1}-y_i}{h}$.
 Ainsi, $y_{i+1} = y_i +h  f(t_i,y_i)$.
 
-\subsection*{Méthode d'Euler implicite}
+\subsection{Méthode d'Euler implicite}
 À l'instant $i$, $\dfrac{\text{d}y(t)}{\text{d}t}$ peut être approximé par 
 $\dfrac{\text{d}y(t_{i})}{\text{d}t} \simeq \dfrac{y_{i}-y_{i-1}}{h}$.
 Ainsi, $y_{i} = y_{i-1} +h  f(t_{i-1},y_{i})$ ou encore $y_{i+1} = y_{i} +h  f(t_{i},y_{i+1})$.
 \subsection*{Bibliothèque Python}
 
-Voir exemples : \url{http://python.physique.free.fr/outils_math.html}.
+Voir exemples : \url{http://python.physique.free.fr/outils_math.html} ou \url{https://cpge.frama.io/fiches-cpge/Python/00-Outils/}
 
 
 \subsection{Exemples -- Reformulation d'équations différentielles en vue de leur résolution numérique.}
@@ -384,30 +384,26 @@ $\Leftrightarrow \omega[k+1] \left(1+\dfrac{h}{\tau}\right) =\dfrac{\tau}{1+h}\l
 
 \subsubsection{Équation différentielle du premier ordre à coefficients non constants}
 
-\begin{itemize}[label=\ding{112},font=\color{red}] 
-\item   $\omega(t) f(t) + \tau \dfrac{\text{d} \omega(t)}{\text{d}t} g(t)  = \omega_c h(t)$ :
+On a : $\omega(t) f(t) + \tau \dfrac{\text{d} \omega(t)}{\text{d}t} g(t)  = \omega_c h(t)$ :
 \begin{itemize}
 \item Euler explicite : $\dfrac{\text{d} \omega(t)}{\text{d}t}\simeq \dfrac{\omega_{k+1}-\omega_k}{h} \Rightarrow  \omega_k f_k+ \tau  \dfrac{\omega_{k+1}-\omega_k}{h} g_k= \omega_c h_k  \Leftrightarrow \omega_{k+1} =\dfrac{h}{\tau g_k} \left(\omega_c h_k - \omega_k f_k \right)+\omega_k$;
 \item Euler implicite : $\dfrac{\text{d} \omega(t)}{\text{d}t}\simeq \dfrac{\omega_{k}-\omega_{k-1}}{h} \Rightarrow  \omega_k f_k+ \tau \dfrac{\omega_{k}-\omega_{k-1}}{h} g_k= \omega_c h_k  \Leftrightarrow \omega_k =  \dfrac{h\omega_c h_k +\tau g_k\omega_{k-1}}{f_k h+   \tau g_k}  $.
 \end{itemize}
-\end{itemize}
 
 
 \subsubsection{Équation différentielle du premier ordre}
-
-\begin{itemize}[label=\ding{112},font=\color{red}] 
-\item  $\sin \left(\omega(t)\right) + \dfrac{\text{d}\omega(t)}{\text{d}t}=K$ :
+On a $\sin \left(\omega(t)\right) + \dfrac{\text{d}\omega(t)}{\text{d}t}=K$ :
 \begin{itemize}
 \item Euler explicite : $\dfrac{\text{d} \omega(t)}{\text{d}t}\simeq \dfrac{\omega_{k+1}-\omega_k}{h} \Rightarrow  \sin \omega_k +  \dfrac{\omega_{k+1}-\omega_k}{h}=K \Leftrightarrow  \omega_{k+1}=h\left( K - \sin \omega_k\right)+\omega_k$;
 \item Euler implicite : $\dfrac{\text{d} \omega(t)}{\text{d}t}\simeq \dfrac{\omega_{k}-\omega_{k-1}}{h} \Rightarrow \sin \omega_k +  \dfrac{\omega_{k}-\omega_{k-1}}{h}=K \Leftrightarrow h\sin \omega_k +  \omega_{k}-\omega_{k-1}=hK$. Dans ce cas, il faut utiliser la méthode de Newton ou de dichotomie pour déterminer $\omega_k$.
 \end{itemize}
 
-\end{itemize}
-
 
 \subsubsection{Équation différentielle du second ordre}
 
- Soit l'équation $\ddot{s}(t) + \dfrac{2\xi}{\omega_0} \dot{s}(t) + \omega_0^2 s(t) = Ke(t)$ avec $s(0)=0$ et $\dot{s}(t)=0$
+ Soit l'équation $\ddot{s}(t) + \dfrac{2\xi}{\omega_0} \dot{s}(t) + \omega_0^2 s(t) = Ke(t)$ avec $s(0)=0$ et $\dot{s}(t)=0$.
+
+\paragraph*{Utilisation de la fonction de Cauchy}
 En utilisant le problème de Cauchy, on pose : 
 $Y(t)=
 \left\{
@@ -432,7 +428,8 @@ $\Rightarrow
 \right.
 $
 
-En utilisant le schéma d'euler explicte on a donc $Y[k+1] = Y[k]+h
+
+En utilisant le schéma d'euler explicte, on a donc $Y[k+1] = Y[k]+h
 \left[
 \begin{array}{l}
 y_2[k] \\
@@ -471,46 +468,91 @@ y_2[k]+h\left(Ke[k] - \dfrac{2\xi}{\omega_0} y_2[k]- \omega_0^2 y_1[k] \right)\\
 \end{array}
 \right]
 $
-\footnotesize{
 
-Schéma d'Euler explicite :   $\dfrac{\text{d} y(t)}{\text{d}t}\simeq \dfrac{y_{k+1}-y_k}{h}$. On a donc :
-$$
+\newpage
+\paragraph*{Résolution avec solve ivp}
+
+\begin{marginfigure}
+\includegraphics{Figure_1}
+\end{marginfigure}
+
+\begin{lstlisting}
+from scipy.integrate import solve_ivp
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Définition des conditions initiales
+y0, v0 = 0,0
+
+# Définition du système d'équation différentielle
+def systeme(t,Y):
+    K, xi, om0, e = 1,0.2,1,1
+    y1 = Y[0]
+    y2 = Y[1]
+
+    dy1_dt = y2
+    dy2_dt = K*e-2*xi/om0*y2-om0*om0*y1
+   
+
+    return [dy1_dt,  dy2_dt]
+
+
+# Résolution
+solution = solve_ivp(systeme, [0, 50], [y0, v0], max_step=0.01)
+
+plt.plot(solution.t, solution.y[0], label="Position")
+plt.plot(solution.t, solution.y[1], label="Vitesse")
+plt.grid()
+plt.legend()
+plt.show()
+\end{lstlisting}
+
+
+\paragraph*{Discrétisation de l'équation différentielle}
+
+Schéma d'Euler explicite :   $\dfrac{\text{d} y(t)}{\text{d}t}\simeq \dfrac{y_{k+1}-y_k}{h}$. 
+
+On a donc :
+$
 \left\{
 \begin{array}{l}
 \dfrac{y_{1,k+1}-y_{1,k}}{h} = y_{2,k} \\
 \dfrac{y_{2,k+1}-y_{2,k}}{h} + \dfrac{2\xi}{\omega_0} y_{2,k}+ \omega_0^2 y_{1,k} = Ke_k \\
 \end{array}
 \right.
-$$ 
+$ 
 
-$$\Leftrightarrow 
+$\Leftrightarrow 
 \left\{
 \begin{array}{l}
 y_{1,k+1} = h y_{2,k} +y_{1,k} \\
 y_{2,k+1}  = hKe_k - \dfrac{2\xi h}{\omega_0} y_{2,k}- h\omega_0^2 y_{1,k} + y_{2,k}\\
 \end{array}
 \right.
-$$ 
+$ 
 
 
-Schéma d'Euler implicite: $\dfrac{\text{d} y(t)}{\text{d}t}\simeq \dfrac{y_{k}-y_{k-1}}{h}$. On a donc :
-$$
+Avec Euler implicite $\dfrac{\text{d} y(t)}{\text{d}t}\simeq \dfrac{y_{k}-y_{k-1}}{h}$. 
+
+On a donc :
+$
 \left\{
 \begin{array}{l}
 \dfrac{y_{1,k}-y_{1,k-1}}{h} = y_{2,k} \\
 \dfrac{y_{2,k}-y_{2,k-1}}{h} + \dfrac{2\xi}{\omega_0} y_{2,k}+ \omega_0^2 y_{1,k} = Ke_k \\
 \end{array}
-\right.$$
-$$
+\right.$
+
+$
 \Leftrightarrow 
 \left\{
 \begin{array}{l}
 y_{1,k} = hy_{2,k}+y_{1,k-1} \\
 y_{2,k} =\dfrac{h Ke_k+y_{2,k-1} - h\omega_0^2 y_{1,k-1}}{1+  h \dfrac{2\xi}{\omega_0} +  \omega_0^2 h^2 } \\
 \end{array}
-\right.$$
+\right.$
 
-\normalsize
+
 
 
 \subsubsection{Suite ...}
@@ -542,9 +584,7 @@ $$
 
 
 
-\begin{center}
-\begin{tabular}{p{.47\linewidth}|p{.47\linewidth}}
-Schéma d'Euler explicite :   
+\paragraph*{Discrétisation avec Euler explicite}
 
 $
 \left\{
@@ -561,8 +601,8 @@ y_{0,k+1} = h y_{1,k} +y_{0,k} \\
 y_{1,k+1} = y_{1,k} - kh \sin y_{0,k} \\
 \end{array}
 \right.$
-&
-Schéma d'Euler implicite : 
+
+\paragraph*{Discrétisation avec Euler implicite}
 
 $
 \left\{
@@ -579,14 +619,14 @@ y_{0,k} = h y_{1,k}+y_{0,k-1} \\
 y_{1,k} = y_{1,k-1} - kh \sin y_{0,k} \\
 \end{array}
 \right.$.
-\end{tabular}
-\end{center}
+
+
 
 
 %\item Équation différentielle du second ordre : $(k_1+k_2  \sin^2 \theta(t) ) \ddot{\theta}(t)+ (k_3 \dot{\theta}(t)^2+k_4) \sin 2\theta(t) +C(t)=0$.
 
 \end{itemize}
-\subsection{Bibliothèque Python}
+%\subsection{Bibliothèque Python}
 
 \section{Résolution de systèmes linéaires}
 \subsection{Utilisation du pivot de Gauss}
@@ -725,7 +765,7 @@ Sous forme matricielle le système s'écrit $AX=B$ avec $X$ le vecteur inconnu.
 
 \subsection{Pivot de Gauss}
 %\subsubsection{
-\begin{defi}{Pivot d'une ligne}
+\begin{defi}[Pivot d'une ligne]
 On appelle pivot d'une ligne le premier nombre non nul de cette ligne. 
 \end{defi}
 
@@ -777,9 +817,11 @@ Dans un second cas, la première colonne contient au moins un nombre non nul.
 
 
 \begin{exemple}
-\footnotesize
+
+
+
 Soit le système suivant à résoudre ainsi que la matrice augmentée qui lui est associée : 
-$$
+$
 \left\{
 \begin{array}{l}
 x   + y  -2 z +4t = 5 \\
@@ -788,31 +830,32 @@ x   + y  -2 z +4t = 5 \\
 1x + 2y +3 z +3t = -1 \\
 \end{array}
 \right.
-\quad\quad
+$
+$\quad\quad
 \begin{pmatrix}
 1 & 1 & -2 & 4 & | & 5 \\
 2 & 2 & -3 & 2 & | &  3 \\
 3 & 3 & -4 &  -2& | & 1 \\
 1 & 2 & 3 & 3 & | & -1 \\
-\end{pmatrix}
-\quad \left\{
+\end{pmatrix}$
+
+$\quad \left\{
 \begin{array}{l}
 (L_2) \leftarrow (L_2) - 2 (L_1) \\ 
 (L_3) \leftarrow (L_3) - 3 (L_1) \\
 (L_4) \leftarrow (L_4) -  (L_1) \\
 \end{array}
-\right.
-\quad\Longrightarrow \quad
+\right.\quad$
+$\Longrightarrow \quad
 \begin{pmatrix}
 1 & 1 & -2 & 4 & | & 5 \\
 0 & 0 & 1 & -7 & | &  -6 \\
 0 & 0 & 2 &  -14& | & -14 \\
 0 & 1 & 5 & -1 & | & -6 \\
 \end{pmatrix}
-$$
+$
 
-
-$$
+$
 %%\left\{
 \begin{array}{l}
 (L_2) \leftrightarrow (L_4)  \\ 
@@ -825,22 +868,25 @@ $$
 0 & 0 & 2 &  -14& | & -14 \\
 0 & 0 & 1 & -6 & | &  -7 \\
 \end{pmatrix}
-%
-\quad
+$
+
+
+$\quad
 %\left\{
 \begin{array}{l}
 (L_4) \leftarrow (L_4) - \dfrac{1}{2} (L_3)\\ 
 \end{array}
 %\right.
-\quad\Longrightarrow \quad
+\quad $
+$\Longrightarrow \quad
 \begin{pmatrix}
 1 & 1 & -2 & 4 & | & 5 \\
 0 & 1 & -1 & -7 & | & -6 \\
 0 & 0 & 2 &  -14& | & -14 \\
 0 & 0 & 0 & 1 & | &  0 \\
 \end{pmatrix}
-$$
-\normalsize
+$
+
 
 \end{exemple}
 
@@ -857,12 +903,10 @@ $
 0  & \alpha & \beta  &  \beta   &  | & \beta \\
 0 & 0 &   \alpha& \beta &  | &\beta  \\
 0 & 0 & 0 & \alpha &   | &\beta\\
-\end{pmatrix}
-\quad 
-\text{ avec }\alpha \text{ non nul et }\beta \text{ réel quelconque.}
-$
+\end{pmatrix}$
+ avec $\alpha$ non nul et $\beta$ réel quelconque.
 
-\begin{defi}{Matrice échelonnée}
+\begin{defi}[Matrice échelonnée]
 On dit d'une matrice qu'elle est échelonnée en ligne si :
 \begin{enumerate}
 \item une ligne est nulle, les suivantes le sont aussi;
@@ -913,9 +957,7 @@ On peut poursuivre le pivot en :
 
 \begin{proposition}
 Toute matrice est équivalente en ligne à une et une seule matrice échelonnée réduite. 
-
 En conséquence, on peut définir le rang d'une matrice quelconque comme le rang de sa matrice échelonnée réduite en ligne. 
-
 On peut définir (le nombre) le rang d'un système comme le rang de la matrice de ses coefficients $(A)$. 
 \end{proposition}
 
