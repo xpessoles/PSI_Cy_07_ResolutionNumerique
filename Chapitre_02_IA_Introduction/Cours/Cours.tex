@@ -1,0 +1,691 @@
+\setchapterimage{Fond_IA.png}
+\setchapterpreamble[u]{\margintoc}
+
+\chapter{Introduction à l'apprentissage automatisé}
+
+%\marginnote[5cm]{
+%\UPSTIcompetence[2]{C3-02}
+%\UPSTIcompetence[2]{C2-04}
+%}
+
+
+
+\marginnote[5cm]{
+\begin{itemize}
+\item Analyser les principes d'intelligence artificielle.
+\begin{itemize}
+\item Régression et classification, apprentissages supervisé et non supervisé.
+\item Phases d'apprentissage et d'inférence.
+\item Modèle linéaire monovariable ou multivariable.
+\end{itemize}
+\item Interpréter et vérifier la cohérence des résultats obtenus expérimentalement, analytiquement : Ordre de grandeur. Matrice de confusion (tableau de contingence), sensibilité et spécificité d'un test.
+\item Résoudre un problème en utilisant une solution d'intelligence artificielle : 
+\begin{itemize}
+\item Apprentissage supervisé.
+\item Choix des données d'apprentissage. 
+\item Mise en œuvre des algorithmes %(réseaux de neurones, 
+($k$ plus proches voisins et régression linéaire multiple).
+\item Phases d'apprentissage et d'inférence.
+\end{itemize}
+\end{itemize}}
+
+
+
+
+\section{L'Intelligence Artificielle, qu'est ce que c'est, à quoi ça sert ?}
+
+\subsection{Premières définitions -- IA, données}
+%\subsection{Première approche. Que veut-on ? Qu'obtient-on ?}
+\begin{defi}[Intelligence Artificielle]
+Wikipedia -- L'intelligence artificielle (IA) est « l'ensemble des théories et des techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence ». 
+\end{defi}
+
+En première approche, l'IA peut être assimilée à un ensemble d'algorithmes permettant de réaliser des tris, des classifications.
+\begin{exemple}
+
+\begin{multicols}{2}
+\begin{center}
+\includegraphics[width=.8\linewidth]{fig_01}
+\end{center}
+Identification d'objets, en temps réel, dans une vidéo.
+
+\begin{center}
+\includegraphics[width=.95\linewidth]{fig_02_a}
+\end{center}
+
+
+Comparaison du résultats d'algorithmes de classification permettant de classifier un nuage de points bleus et rouges de transparences différentes.
+\end{multicols}
+
+On remarquera sur l'exemple de gauche que l'algorithme parvient à identifier sur l'image des zones puis à identifier à quoi elles correspondent. On remarquera aussi que la flamme est identifiée comme étant un donut...
+
+
+\begin{flushright}
+\footnotesize
+\url{exploring-opencvs-deep-learning-object-detection-library} \&  \url{https://scikit-learn.org/}.
+\normalsize
+
+\end{flushright}
+\end{exemple}
+
+
+
+Pour utiliser un algorithme d'IA il est nécessaire de disposer de données... en général beaucoup de données. 
+\begin{defi}[Données]
+Les données utilisées par un algorithme d'IA peuvent être sous différentes formes : 
+\begin{itemize}
+\item des données quantitatives continues qui peuvent prendre n'importe quelles valeurs dans un ensemble de valeurs (par exemple la température);
+\item des données quantitatives discrètes qui peuvent prendre un nombre limité de valeurs dans un ensemble de valeurs (par exemple nombre de pièces d'un logement);
+\item des données qualitatives (ordinales ou nominales suivant qu'on puissent les classer ou non, par exemple des couleurs, des notes à un test d'opinion ...).
+\end{itemize}
+
+\end{defi}
+
+Pour pouvoir traiter ces données, il peut être nécessaire qu'elles soient organisées sous une certaine forme. On peut par exemple identifier : 
+\begin{itemize}
+\item les données structurées, dans une base de données par exemple;
+\item les données semi-structurées, dans un fichier csv, xml ou json par exemple;
+\item les données non structurées comme un image, du texte, ou une vidéo.
+\end{itemize}
+
+\begin{exemple}
+Le site \url{https://www.kaggle.com/} partage des sets de données. 
+
+On peut par exemple retrouver un dataset semi-strucutrées au format JSON ou CSV des chansons disponibles sur Spotify, sorties entre 1922 et 2021. 
+(\url{https://www.kaggle.com/yamaerenay/spotify-dataset-19212020-160k-tracks}).
+
+Le site \url{https://storage.googleapis.com/} propose des sets de photos étiquetées selon 600 classes. 
+\end{exemple}
+
+\begin{defi}[Observations -- Caractéristiques]
+
+On appelle observation (ou individu ou objet) une << ligne de donnée >> qui va être utilisée par un algorithme d'apprentissage. 
+
+Une observation est composée de caractéristiques qui varient pour chacun des observations. 
+\end{defi}
+
+
+\begin{marginfigure}
+\centering
+\includegraphics[width=.8\linewidth]{fig_10}
+\end{marginfigure}
+
+\begin{exemple}
+Dans le cas de la base de donnée des Iris, présente par exemple dans \texttt{scikit-learn}, les données sont composées de 150 observations, chacune composée de 4 caractéristiques : longueur et largeur du sépale ainsi que longueur et largeur du pétale.
+\end{exemple}
+
+
+\begin{defi}[Big data -- Wikipedia]
+Mégadonnées ou données massives. Le big data désigne les ressources d’informations dont les caractéristiques en termes de volume, de vélocité et de variété imposent l’utilisation de technologies et de méthodes analytiques particulières pour générer de la valeur, et qui dépassent en général les capacités d'une seule et unique machine et nécessitent des traitements parallélisés.
+\end{defi}
+
+
+Que fait-on avec ces données ? En général les algorithmes vont chercher un lien entre ces données. Dans le cas où il existe un lien connu par le \textit{Data Scientist} on parle d'apprentissage supervisé. 
+
+Si ce lien n'est pas connu, on parle d'apprentissage non supervisé ou de clustering. 
+
+
+\subsection{Apprentissage automatisé -- Machine Learning}
+
+\begin{defi}[Apprentissage automatique -- Machine learning]
+L'apprentissage automatique est un champ de l'intelligence artificielle dont l'objectif est d'analyser un grand volume de
+données afin de déterminer des motifs et de réaliser un modèle prédictif. 
+
+L'apprentissage comprend deux phases : 
+\begin{itemize}
+\item l’entraînement (ou apprentissage) est une phase d'estimation du modèle à partir de données d'observations; 
+\item la mise en production du modèle (inférence) est une phase pendant laquelle de nouvelles données sont traitées dans le but d'obtenir le résultat souhaité. 
+\end{itemize}
+
+L’entraînement peut être poursuivi même en phase de production.
+
+\end{defi}
+
+
+\begin{exemple}
+\begin{center}
+\includegraphics[width=.6\linewidth]{fig_05}
+\end{center}
+\end{exemple}
+
+
+\begin{defi}[Apprentissage supervisé -- Apprentissage]
+Tâche d'apprentissage au cours duquel l'algorithme (ou fonction de prédiction) va, à partir d'un ensemble de données \textbf{étiquetées}, déterminer un lien entre un ensemble les données et les étiquettes. 
+\end{defi}
+
+\begin{defi}[Apprentissage supervisé -- Inférence]
+Tâche au cours duquel l'algorithme (ou fonction de prédiction) va, à partir d'un ensemble de données \textbf{non étiquetées}, prédire l'étiquette.
+
+\end{defi}
+
+
+
+\begin{exemple}~\\
+
+\begin{center}
+\includegraphics[width=.8\linewidth]{fig_06}
+\end{center}
+\end{exemple}
+
+
+\begin{exemple}
+Soit un ensemble d'images en noir et blanc représentant des chiffres de 0 à 9. L'algorithme doit dans un premier temps \textit{apprendre} le lien entre l'image et le chiffre. 
+Dans un second temps, l'algorithme devra déterminer le chiffre en fonction d'une image seule.
+\end{exemple}
+
+\begin{defi}[Apprentissage non supervisé -- Clustering]
+Tâche d'apprentissage au cours duquel l'algorithme (ou fonction de prédiction) va, à partir d'un ensemble de données \textbf{non étiquetées}, déterminer un lien entre les données (et les regrouper). 
+\end{defi}
+
+
+
+\begin{exemple} ~\\
+
+
+\begin{center}
+\includegraphics[width=.8\linewidth]{fig_07}
+\end{center}
+
+
+Classification d'iris en utilisant un algorithme d'apprentissage non supervisé.
+\begin{center}
+\includegraphics[width=.8\linewidth]{fig_03}
+\end{center}
+
+On remarque (lorsque l'image est en couleur) que sur des mesures sur 150 iris, l'algorithme a réussi à retrouver les 3 différentes espèces, sans les connaître, à 3 erreurs près.
+
+\end{exemple}
+
+
+\begin{defi}[Apprentissage par renforcement]
+Si au cours de l'apprentissage supervisé, un mécanisme de récompense est mis en \oe{}uvre pour améliorer les performances du modèle, on parle d'apprentissage par renforcement.
+\end{defi}
+
+
+
+On peut donc faire une synthèse des méthodes d'apprentissage dont nous avons pris connaissance (il en existe d'autres).
+
+\begin{center}
+\includegraphics[width=.8\linewidth]{fig_08}
+\end{center}
+
+\textit{Comment situer le deep learning parmi ces méthodes d'apprentissage ? --  Pour moi,  l'utilisation du terme << deep learning >> apparaît lorsqu'on commence à utiliser des réseaux de neurones... mais les réseaux de neurones peuvent être utilisés dans chacune des méthodes d'apprentissage sus-citées...}
+
+\subsection{Encore des définitions...}
+
+\begin{defi}[Classification]
+En apprentissage automatique, on appelle problème de classification les problèmes ou les étiquettes sont discrètes.
+\end{defi}
+
+\begin{exemple} ~\\
+
+\begin{center}
+\includegraphics[width=.8\linewidth]{fig_06}
+\end{center}
+
+Dans le cas où nous souhaitons regrouper par forme, il s'agit d'un problème de classification. Les classes discrètes sont les formes (triangles, carrés, pentagones ...). 
+
+Il serait aussi possible d'opérer un regroupement par couleur. Les classes seraient donc différentes.
+\end{exemple}
+
+\begin{defi}[Régression]
+En apprentissage automatique, on appelle problème de régression les problèmes ou les étiquettes sont continues.
+\end{defi}
+
+\begin{exemple}
+Dans le cas où nous souhaiterions que l'algorithme détermine l'aire ou le périmètre de la forme, les étiquette seraient alors continues sur $\mathbb{R}^{+}_{*}$.
+
+\end{exemple}
+
+
+\section{Mécanismes d'apprentissages}
+
+\subsection{Classification des algorithmes d'apprentissage}
+
+La bibliothèque \texttt{scikit-learn} propose une classification de divers algorithmes en fonction des apprentissages automatiques (hors réseaux de neurones).
+
+
+\begin{center}
+\includegraphics[width=\linewidth]{fig_09}
+\end{center}
+
+
+\subsection{Validation du modèle}
+Une fois un algorithme d'apprentissage choisi, on se pose la question de la validation du modèle. Quels critères et outils vont nous permettre de considérer que notre apprentissage est << bon >> ?
+
+Lors d'un problème de classification, il est par exemple possible de déterminer les écarts entre les valeurs prédites par l'algorithme et les valeurs cibles.
+
+\subsubsection{Critères de validation des problèmes de classification}
+
+
+
+\begin{defi}[Valeur prédictive positive]
+Valeur prédictive positive (\textit{accuracy classification score}) :
+$$
+\text{Justesse} = \dfrac{\text{Nombre de prédictions vraies}}{\text{Nombre de prédictions totales}}.
+$$
+\end{defi}
+
+\begin{lstlisting}
+import sklearn.metrics as skm
+
+# X(numpy.ndarray) : données d'entrées
+# Y(numpy.ndarray) : données cibles correspondantes
+# Y_pred(numpy.ndarray) : données prédites par l'algorithme de classification
+
+print(skm.accuracy_score(Y, Y_pred))
+\end{lstlisting}
+
+
+
+\begin{defi}[Matrices de confusion]
+La matrice de confusion est une métrique permettant de déterminer la qualité d'une classification. En abscisses sont indiquées le valeurs réelles, et on ordonnée les valeurs prédites. 
+\end{defi}
+
+
+\begin{exemple}
+Dans l'exemple ci-contre, nous cherchons à classifier des iris, grâce à un algorithme, selon 3 familles : les setosa, les versicolor et les virginica. 
+
+Sur la diagonale, sont retrouvées les iris dont l'espèce a été correctement prédite. En revanche, 3 versicolor ont été classées parmi les virginica et 2 virginica ont été classifiées dans les versicolor. 
+\end{exemple}
+
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_13_confusion}
+\end{marginfigure}
+
+\begin{remarque}
+La matrice de confusion présentée est dite non-normalisée. Si la répartition des étiquettes n'est pas uniforme (en fonction des classes), il est probable qu'il y ait davantage d'erreurs pour les classes ayant beaucoup d'étiquettes. Pour palier ce problème on peut utiliser des matrices de confusions normalisées (on divise alors chaque terme de la matrice par la somme des éléments de la même ligne).
+\end{remarque}
+
+\subsubsection{Critères de validation des problèmes de régression}
+\begin{defi}[Erreur moyenne quadratique]
+Appelée également \textit{mean squared error}, il s'agit d'une moyenne d'écart au carré : 
+$$
+msq = \dfrac{1}{N} \sum\limits_{i=1}^n \left|\left|Y_i - \hat{Y}_i \right|\right|^2
+$$
+ 
+ en notant $Y_i$ la valeur réelle (étiquetée) et $ \hat{Y}_i$ la valeur estimée par l'algorithme.
+\end{defi}
+
+%\subsubsection{Critères de validation des problèmes d'apprentissage non supervisé}
+
+\subsection{Séparation des données/Gestion des données ?}
+Lorsque l'on souhaite disposer d'un modèle défini par un algorithme d'IA, il faut en premier lieu disposer de données. 
+
+\subsubsection{Types de données -- Apprentissage supervisé}
+
+En apprentissage supervisé, il est nécessaire de connaître des données d'entrées ainsi que les sorties correspondantes (appelées aussi \texttt{cibles} ou \texttt{target}).
+
+Dans le cadre d'une programmation \texttt{Python} avec la bibliothèque \texttt{scikit-learn} les données d'entées et de sorties peuvent être implémentées en utilisant des \texttt{numpy.ndarray}.
+
+Ainsi, si les données d'entrées, stockées dans la variable \texttt{data} sont composées de \texttt{n} observations elles mêmes composées de \texttt{p} catégories, le \text{shape} de \texttt{data} sera \texttt{(n,p)}.
+
+La donnée cible sera quant à elle un vecteur de \texttt{n} valeurs. 
+
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_11}
+\end{marginfigure}
+
+\begin{exemple}
+Données d'entrées  : matrice  \texttt{X} de \texttt{n} observations avec 4 caractéristiques. 
+
+Données de sortie : vecteur \texttt{Y} de \texttt{n} résultats. 
+
+Dans le cadre d'une classification, où \texttt{r} résultats sont possibles. On peut attribuer une valeur (entière) entre 1 et \texttt{r} à chacun des résultats, notamment si ceux-ci sont des données qualitatives.
+
+%\textcolor{red}{\textbf{Problème de l'identification d'un système : quelles sont les données d'entrées ? Quelles sont surtout les données de sorties ? Un vecteur aussi ?}}
+
+\end{exemple}
+
+
+\subsubsection{Normalisation des données \sidenote{\url
+{https://scikit-learn.org/stable/modules/preprocessing.html}}}
+
+\subsubsection{Séparation des données}
+{
+Lors du démarrage d'un apprentissage supervisé, on dispose d'un jeu de données comprenant les données d'entrée et les cibles correspondantes. Il est d'usage de séparer ces données en deux parties :
+\begin{itemize}
+\item les données d’entraînement permettant... d’entraîner le modèle. Dans la pratique on utilise entre 60 et 80\,\% des données de base;
+\item les données de te test, permettant de valider l'apprentissage (ou le modèle), dans la pratique entre 20 et 40\,\% des données de base.
+\end{itemize}
+
+On commence donc par réaliser un apprentissage sur les données d’entraînement. Cet entraînement produit des résultats. Connaissant les cibles correspondant aux données d'entraînement, on peut donc en déduire une performance du modèle sur le traitement des données d’entraînement. 
+
+On utilise alors le modèle en lui donnant les données de test. De même, on peut donc en déduire une performance du modèle sur le traitement des données de test.  
+
+\begin{center}
+\includegraphics[width=.8\linewidth]{fig_12}
+\end{center}
+
+ Se pose alors le problème de comment séparer les données. En effet, les données de base pouvant potentiellement être triées (ordonnées par rapport à une des caractéristiques), et sélectionner une partie pourrait créer un biais dans l'apprentissage. 
+
+\texttt{scikit-learn} permet de séparer aléatoirement des données en fixant le pourcentage de données de validation.
+
+
+\begin{lstlisting}
+from sklearn.model_selection import train_test_split
+# X(numpy.ndarray) : données d'entrées
+# Y(numpy.ndarray) : données cibles correspondantes
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33)
+\end{lstlisting}
+
+
+On perçoit donc que la qualité de l'apprentissage peut dépendre du choix utilisé lors de la séparation des données. De plus, certains choix de paramètres permettant d’affiner le modèle sont aussi liés aux données d’entraînement sélectionnées. 
+Une des solutions pour résoudre ce problème est d'avoir recours à la validation croisée\sidenote{\url{https://scikit-learn.org/stable/modules/cross_validation.html}}. 
+
+%\textcolor{red}{\textbf{À creuser}}
+
+%Il est parfois possible de séparer en faisant en sorte que les valeurs moyennes et écarts types des données cibles des données d’entraînement et des données de test soient les mêmes.
+
+%La séparation des donné
+%Afin de palier ce problème il est possible (conseillé) d'avoir recours à la validation croisée.  
+
+
+
+
+%%%%
+%\url{https://jonchar.net/notebooks/k-means/#:~:text=k%2Dmeans%20clustering%3A%20An%20example,3%20using%20numpy%20and%20matplotlib.&text=The%20k%2Dmeans%20algorithm%20is,user%20before%20starting%20the%20algorithm}
+
+%\newpage
+
+\section{Algorithmes d'apprentissage}
+
+\subsection{Algorithme des $k$ plus proches voisins}
+\subsubsection{Présentation}
+L'algorithme des  $k$ plus proches voisins (aussi appelé $k$-nearest neighbors algorithm -- $k$-NN) permet de réaliser des opérations de régression et de classification sur un ensemble de données. 
+
+Pour une première approche, cette méthode permet d'estimer la classe d'une nouvelle donnée en déterminant la norme entre cette nouvelle donnée et l'ensemble des données du jeu d’entraînement. Parmi les $k$ plus proches voisins, on recherche la classe majoritaire et on attribue cette classe à la nouvelle donnée.  
+
+
+
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_14_02}
+\end{marginfigure}
+\begin{exemple}
+Dans le cas ci-contre, on cherche à classifier les iris selon 3 catégories (setosa, versicolor et virginca). Les données étiquetées sont représentées dans le plan longueur du sépale en abscisse et largeur du pétale en ordonnée. 
+
+Soient les candidats 1 et 2, deux iris dont ont connaît les caractéristiques mais pas l'espèce. Les 5 plus proches voisins du candidat 1 sont des setosa. Il est donc probable que le candidat 1 soit un setosa aussi.
+
+Concernant le candidat 2, parmi les 5 plus proches voisins, 3 sont des virginica et 2 sont des versicolor. On peut faire l'hypothèse que c'est un virginica. 
+
+\end{exemple}
+
+\subsubsection{L'algorithme}
+
+Prenons comme exemple des données sous la forme \texttt{[x,y,c]} où \texttt{x} et \texttt{y} représentent des coordonnées et \texttt{c} la classe d'appartenance.
+\paragraph*{Première étape -- Calculer la distance}
+
+Il faut tout d'abord définir une fonction de distance. On peut par exemple utiliser la distance euclidienne.
+Pour deux vecteurs $x_1$ et $x_2$ de taille $N$, 
+$d = \sqrt{ \sum\limits_{i=1}^n \left(x_{1,i}-x_{2,i} \right)^2}$.
+
+\begin{lstlisting}
+import math as m
+def distance(x1:list, x2:list) -> float :
+    distance = 0.
+    for i in range(len(x1)):
+        distance += (x1[i]-x2[i])**2
+    return m.sqrt(distance)
+\end{lstlisting}
+
+\paragraph*{Deuxième étape -- Détermination des plus proches voisins}
+Pour cette étape, on dispose de données pour l’entraînement \texttt{data\_train} et d'une donnée à tester \texttt{data\_test}.
+Il va falloir calculer la distance entre la donnée à tester et les données d’entraînement puis trier les données. 
+
+Enfin, on retournera les $k$ lignes les plus proches de \texttt{data\_test}.
+
+
+\begin{lstlisting}
+def get_voisins(data_train:list, data_test, k:int) -> list :
+    distances =[]
+    for ligne in data_train : 
+        d = distance(ligne,data_test)
+        distances.append([ligne,d])
+    # Tri de la liste suivant la seconde colonne (distances)
+    distances.sort(key=lambda t : t[1]) 
+    voisins = []
+    for i in range(k) :
+        voisins.append(distance[i][0])
+    return voisins
+\end{lstlisting}
+
+\paragraph*{Troisième étape -- Prédiction}
+
+Une fois qu'on connaît les $k$ plus proches voisins, on regarde quelle est la classe majoritaire parmi ces voisins. 
+
+\begin{lstlisting}
+def prediction(data_train:list, data_test, k:int) -> list :
+    voisins = get_voisins(data_train, data_test, k)
+    sorties = [ligne[-1] for ligne in voisins]
+    predict = max(set(sorties), key=sorties.count)
+    return predict
+\end{lstlisting}
+
+
+\paragraph*{Prédiction avec \texttt{scikit-learn}}
+
+Un exemple rapide pour réaliser une classification $k$-NN avec \texttt{scikit-learn}.
+\begin{lstlisting}
+import numpy as np
+from sklearn import datasets
+from sklearn.neighbors import KNeighborsClassifier
+
+iris_X, iris_y = datasets.load_iris(return_X_y=True)
+
+
+# A random permutation, to split the data randomly
+np.random.seed(0)
+
+# Chargement des données et séparation des données
+indices = np.random.permutation(len(iris_X))
+iris_X_train = iris_X[indices[:-10]]
+iris_y_train = iris_y[indices[:-10]]
+iris_X_test = iris_X[indices[-10:]]
+iris_y_test = iris_y[indices[-10:]]
+
+# Création du classifieur
+knn = KNeighborsClassifier() # KNeighborsClassifier(n_neighbors=k) pour choisir k
+# Entraînement du classifieur
+knn.fit(iris_X_train, iris_y_train)
+# Prédiction sur le jeu de test (à comparer avec iris_y_test)
+knn.predict(iris_X_test)
+\end{lstlisting}
+
+
+
+\subsection{Régression univariée \sidenote{Chloé-Agathe Azencott}}
+
+
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_15}
+\end{marginfigure}
+
+
+Dans le cadre de la régression linéaire unvariée, on dispose de $n$ observations : $\mathcal{D}=\left\{ \left(x_1,y_1 \right), \left(x_2,y_2 \right), ..., \left(x_i,y_i \right), ..., \left(x_n,y_n \right)\right\}$ et des étiquettes $y_i$ associées. 
+La régression linéaire consiste à choisir une fonction de prédiction $f$ de la forme, $\forall x \in \mathbb{R}, f(x)=ax+b$ avec$\left(a,b\right) \in \mathbb{R}^2$. Il va donc falloir minimiser l'erreur entre les prédictions et la base de données d’entraînement. La minimisation se note : 
+$$ \left(\hat{a},\hat{b}\right)= \text{arg} \min\limits_{\left(a,b\right) \in \mathbb{R}^2} \dfrac{1}{n}\sum\limits_{i=1}^{n}\left( y_i - \left(ax_i +b\right) \right)^2.$$
+
+(Méthode des moindres carrés)
+
+On montre que si $\sum\limits_{i=1}^{n}x_i^2 \neq \left(\sum\limits_{i=1}^{n}x_i\right)^2 $ le problème à une unique solution. Sinon le système est indéterminé et il y a une infinité de solutions.
+
+
+
+
+
+
+
+\paragraph*{Exemple de régression linéaire univariée avec \texttt{scikit-learn}}
+\begin{lstlisting}
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load the diabetes dataset
+diabetes_X, diabetes_y = datasets.load_diabetes(return_X_y=True)
+
+# Use only one feature
+diabetes_X = diabetes_X[:, np.newaxis, 2]
+
+# Split the data into training/testing sets
+diabetes_X_train = diabetes_X[:-20]
+diabetes_X_test = diabetes_X[-20:]
+
+# Split the targets into training/testing sets
+diabetes_y_train = diabetes_y[:-20]
+diabetes_y_test = diabetes_y[-20:]
+
+# Create linear regression object
+regr = linear_model.LinearRegression()
+
+# Train the model using the training sets
+regr.fit(diabetes_X_train, diabetes_y_train)
+
+# Make predictions using the testing set
+diabetes_y_pred = regr.predict(diabetes_X_test)
+
+# The coefficients
+print('Coefficients: \n', regr.coef_)
+# The mean squared error
+print('Mean squared error: %.2f'
+      % mean_squared_error(diabetes_y_test, diabetes_y_pred))
+# The coefficient of determination: 1 is perfect prediction
+print('Coefficient of determination: %.2f'
+      % r2_score(diabetes_y_test, diabetes_y_pred))
+
+# Plot outputs
+plt.scatter(diabetes_X_test, diabetes_y_test,  color='black')
+plt.plot(diabetes_X_test, diabetes_y_pred, color='blue', linewidth=3)
+
+plt.xticks(())
+plt.yticks(())
+
+plt.show()
+\end{lstlisting}
+
+%\subsection{Régression multivariée}
+%[À faire]
+%
+%\section{Réseaux de neurones}
+%
+%\url{https://playground.tensorflow.org/}
+%
+%
+%
+%\section{Définitions}
+%
+%\begin{itemize}
+%\item Data scientist
+%\item machine learning
+%\item deep learning
+%\item réseaux de neurons
+%\item régression
+%\item data mining
+%\item bigdata
+%\item données continues, données discrètes, données nominales, données ordinales, données (semi-)structurées et non structurées
+%
+%\end{itemize}
+%
+%
+%\begin{itemize}
+%\item algorithmes supervisés, non supervisés
+%\item algorithmes de régression et de classification
+%\end{itemize}
+%
+%\begin{defi}[Machine Learning -- Apprentissage automatique -- Wikipedia] 
+%Champ d'étude de l'intelligence artificielle qui se fonde sur des approches mathématiques et statistiques pour donner aux ordinateurs la capacité d' « apprendre » à partir de données, c'est-à-dire d'améliorer leurs performances à résoudre des tâches sans être explicitement programmés pour chacune. 
+%
+%La première phase de l'apprentissage consiste à estimer un modèle à partir de données, appelées observations, qui sont disponibles et en nombre fini, lors de la phase de conception du système.
+%
+% La seconde phase correspond à la mise en production : le modèle étant déterminé, de nouvelles données peuvent alors être soumises afin d'obtenir le résultat correspondant à la tâche souhaitée.
+%\end{defi}
+%
+%
+%\begin{defi}[Apprentissage supervisé -- Apprentissage non supervisé -- Apprentissage par renforcement -- Wikipedia] 
+%Si les données sont étiquetées (c'est-à-dire que la réponse à la tâche est connue pour ces données), il s'agit d'un apprentissage supervisé. On parle de :
+%\begin{itemize}
+%\item classification ou de classement si les étiquettes sont discrètes;
+%\item régression si elles sont continues.
+%\end{itemize}
+%
+%Si le modèle est appris de manière incrémentale en fonction d'une récompense reçue par le programme pour chacune des actions entreprises, on parle d'apprentissage par renforcement. 
+%
+%Dans le cas le plus général, sans étiquette, on cherche à déterminer la structure sous-jacente des données (qui peuvent être une densité de probabilité) et il s'agit alors d'apprentissage non supervisé.
+%
+%
+%
+%\end{defi}
+%
+%
+%
+%\subsection{Quelques définitions}
+%\begin{defi}{Intelligence Artificielle, première approche}
+%
+%\end{defi}
+%
+%\subsection{Le nerf de la guerre, les données}
+%
+%
+%
+%\subsection{Méthode de résolution de problèmes d'apprentissage supervisé}
+%
+%\begin{enumerate}
+%\item Choix des données.
+%\item Normalisation des données. 
+%\item Séparation des données ? (entraînement, test, validation)
+%\item Choix de la méthode d’entraînement (choix d'un modèle, en fonction du type de données, choix des paramètres du modèle)
+%\item Entraînement du modèle
+%\item Test du modèle
+%\item Observation des métriques et visualisation des résultats
+%\end{enumerate}
+%
+%\section{Méthode de résolution d'un }
+%
+%\newpage
+%
+%
+%1 cours Sur les réseau de neurones
+%
+%\section{TP : Synthèse d'un contrôleur piloté par réseau de neurones}
+%
+%TP identification de la boucle ouverte  
+%\begin{itemize}
+%\item Comparaison modèle (a)causal / réel
+%\item Comparaison modèle ANN / réel
+%\end{itemize}
+%
+%
+%TP Synthèse du contrôleur PID 
+%à partir du modèle
+%To do XP
+%
+%TP synthèse du contrôleur et implémentation sur une cible. 
+%Déploiement sur control X ?
+%
+%
+%
+%\newpage
+%
+%
+%\newpage
+
+%Exemples : 
+%\url{https://makina-corpus.com/blog/metier/2017/initiation-au-machine-learning-avec-python-pratique}
+%\subsection{Pour aller (un peu) plus loin}
+%\texttt{scikit-learn} propose des algorithmes plus efficaces que les $k$ plus proches voisins pour réaliser des classifications. 
+%
+%La figure suivant représente une vue d'ensemble des algorithmes utilisables en fonction des problèmes rencontrés. 
+%
+%\begin{center}
+%\includegraphics[width=.8\linewidth]{fig_09}
+%\end{center}
+%\begin{thebibliography}{2}
+
+\hfill
+
+\textbf{Bibliographie}
+
+\begin{itemize}
+\item [1] Éric Biernat et Michel Lutz. \textit{Data science : fondamentaux et études de cas.} Eyrolles.
+\end{itemize}
