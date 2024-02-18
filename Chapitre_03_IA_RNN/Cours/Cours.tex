@@ -101,7 +101,7 @@ Les fonctions d'activation sont des fonctions mathématiques appliquées au sign
 
 \begin{center}
 \begin{tabular}{cccc}
-%\hline 
+\hline 
 \textbf{Identité} & \textbf{Heaviside} & \textbf{Logistique} & \textbf{Unité de rectification} \\
   &  & \textbf{(sigmoïde)} &  \textbf{linéaire (ReLU)} \\
 \hline 
@@ -151,22 +151,13 @@ Le biais permettra de prendre en compte le << niveau >> du signal d'entrée à p
 \end{remarque}
 
 
-\begin{exemple}~\\
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_02}
+\end{marginfigure}
 
-
-
-\begin{minipage}[c]{.4\linewidth}
-
+\begin{exemple}
 Prenons un neurone à deux entrées binaires. 
 Initialisation les poids et le biais avec des valeurs aléatoires : $w_0 = -0,3$, $w_1 = 0,8$ et $b=0,2$.
-
-\begin{center}
-\includegraphics[width=.9\linewidth]{fig_02}
-\end{center}
-\hfill
-\end{minipage}
-\begin{minipage}[c]{.55\linewidth}
-
 
 On peut donc évaluer l'ensemble des sorties calculable par le neurone.
 
@@ -183,17 +174,16 @@ $x_0$ & $x_1$ & $z$ & Id. & H. & Sig. & ReLu \\
 \hline
 \end{tabular}
 \end{center}
-\end{minipage}
 
 \end{exemple}
 
 
 \section{Réseaux de neurones}
-\url{https://playground.tensorflow.org/}
 %LSTM
-
+\marginnote{\url{https://playground.tensorflow.org/}}
 
 \subsection{Modélisation d'un réseau de neurones} 
+
 
 \begin{defi}[Couches]
 
@@ -206,14 +196,14 @@ Dans un réseau de neurones \textbf{dense} tous les neurones de la couche $i$ so
 \item Couche cachée (ou couche intermédiaire) : il s'agit d'une couche qui a une utilité intrinsèque au réseau de neurones. Ajouter des neurone dans cette couche (ou ces couches) permet donc d'ajouter de nouveaux paramètres.  Pour une couche, la même fonction d'activation est utilisée pour tous les neurones. En revanche la fonction d'activation utilisée peut être différente pour deux couches différentes. Les fonctions d'activations des couches intermédiaires sont souvent non linéaires.
 \item Couche de sortie : le nombre de neurones de cette couche correspond au nombre de sorties attendues. La fonction d'activation de la couche de sortie est souvent linéaire. On note $\mathbf{Y} = \left( y_0, ..., y_p\right)$ le vecteur des sorties.
 \end{itemize}
-%\begin{minipage}[c]{.5\linewidth}
+
 \begin{center}
 \includegraphics[width=.8\linewidth]{fig_04}
 \end{center}
-%\end{minipage}
 
-En utilisant la loi de comportement du modèle de perceptron, on peut donc exprimer $\mathbf{Y}=\mathcal{F}\left(\mathbf{X}\right)$ 
-où $\mathcal{F}$ est une fonction dépendant des entrées, des poids et des biais.
+
+
+En utilisant la loi de comportement du modèle de perceptron, on peut donc exprimer $\mathbf{Y}=\mathcal{F}\left(\mathbf{X}\right)$ où $\mathcal{F}$ est une fonction dépendant des entrées, des poids et des biais.
 
 
 Notations : 
@@ -223,7 +213,9 @@ Notations :
 \item $f^{[\ell]}$ la fonction d'activation de la couche $\ell$;
 \item $n^{[\ell]}$ le nombre de neurones de la couche $\ell$.
 \end{itemize}
+
 \end{defi}
+
 
 \begin{defi}[Équation de propagation]
 
@@ -235,9 +227,11 @@ $$
 \end{defi}
 
 
-\begin{exemple}~\\
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_05}
+\end{marginfigure}
 
-\begin{minipage}[c]{.4\linewidth}
+\begin{exemple}
 
 Prenons un réseau de neurones à 3 couches : 
 \begin{itemize}
@@ -248,13 +242,6 @@ Prenons un réseau de neurones à 3 couches :
 
 Initialisation les poids et le biais avec des valeurs aléatoires : $w_0 = -0,3$, $w_1 = 0,8$ et $b=0,2$.
 
-
-
-\end{minipage}\hfill
-\begin{minipage}[c]{.55\linewidth}
-\begin{center}
-\includegraphics[width=.9\linewidth]{fig_05}
-\end{center}
 %On peut donc évaluer l'ensemble des sorties calculable par le neurone.
 %
 %\begin{center}
@@ -270,7 +257,6 @@ Initialisation les poids et le biais avec des valeurs aléatoires : $w_0 = -0,3$
 %\hline
 %\end{tabular}
 %\end{center}
-\end{minipage}
 
 Il est possible d'écrire que 
 $y_0 = a_0^{[2]}$ 
@@ -285,6 +271,7 @@ $ = f_1\left(b_1^{[1]}+ w_{10}^{[1]} a_0^{[0]}+ w_{11}^{[1]} a_1^{[0]}\right)$.
 Au final, on a donc 
 
 $y_0 = a_0^{[1]}$
+
 $ =  f_2\left(b_0^{[2]}+ w_{00}^{[2]}\left(f_1\left(b_0^{[1]}+ w_{00}^{[1]} a_0^{[0]}+ w_{01}^{[1]} a_1^{[0]}\right)\right)+ w_{01}^{[2]} \left( f_1\left(b_1^{[1]}+ w_{10}^{[1]} a_0^{[0]}+ w_{11}^{[1]} a_1^{[0]}\right)\right)\right) $ 
 
 
@@ -339,7 +326,11 @@ L'objectif est dès lors de déterminer les poids et les biais qui minimisent la
 
 \subsection{Notion de rétropropagation -- Descente de gradient}
 
-\begin{minipage}[c]{.55\linewidth}
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_05}
+\end{marginfigure}
+
+
 En réutilisant l'exemple ci-contre, nous allons présenter succinctement comment est minimisée la fonction coût.
 Pour cela, il va falloir dériver la fonction coût par rapport à chacune des variables. 
 
@@ -350,11 +341,6 @@ Cherchons uniquement à déterminer le coût par rapport à un seul vecteur d'en
 \item $z_0^{[2]} =\sum\limits_{k=0}^{1}\left( w^{[2]}_{0k} a_k^{[1]} \right) + b^{[2]}_{0}$.
 \end{itemize}
 
-\end{minipage}\hfill
-\begin{minipage}[c]{.4\linewidth}
-\begin{center}
-\includegraphics[width=.9\linewidth]{fig_05}
-\end{center}
 %On peut donc évaluer l'ensemble des sorties calculable par le neurone.
 %
 %\begin{center}
@@ -370,7 +356,7 @@ Cherchons uniquement à déterminer le coût par rapport à un seul vecteur d'en
 %\hline
 %\end{tabular}
 %\end{center}
-\end{minipage}
+
 
 
 Commençons par déterminer la dérivée partielle par rapport à un poids de la couche de sortie : 
@@ -431,7 +417,6 @@ $\text{grad} C = \begin{bmatrix}
 \end{bmatrix}
 $.
 
-
 \end{defi}
 
 \subsection{Fin d'apprentissage}
@@ -440,11 +425,13 @@ $.
 On appelle \textit{epoch} un cycle d'apprentissage où tous les poids et tous les biais ont été mis à jour en faisant passer toutes les données du jeu d’entraînement dans les algorithmes de propagation et de rétropropagation.
 \end{defi}
 
+
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_06_overfitting}
+\end{marginfigure}
+
 Les méthodes pour stopper l'apprentissage sont essentiellement empiriques. On pourrait en effet fixer un nombre d'epoch ou une valeur d'erreur admissible et s'arrêter à ce moment là. Dans la pratique, se focaliser sur l'erreur n'est généralement pas satisfaisant. En effet, il y a risque de << suraprentissage >>.
 
-\begin{center}
-\includegraphics[width=.6\linewidth]{fig_06_overfitting}
-\end{center}
 
 Dans la figure suivante, on réalise un entraînement sur le jeu de données (une epoch) à la fin de l'epoch on dispose d'un premier modèle de réseau de neurones.  On détermine alors l'erreur commise en utilisant le jeu d'entraînement puis l'erreur commise sur le jeu de validation.  On calcule ensuite l'erreur commise par le modèle sur le jeu de validation. (On rappelle que le jeu de validation ne sert pas à modifier les poids et les biais.)
 
@@ -456,15 +443,13 @@ Sur le jeu de validation, l'erreur décroît pendant un certain nombre d'epoch p
 
 Il existe en fait un stade à partir duquel le réseau de neurones se spécialise sur le jeu d’entraînement et devient donc incapable de réaliser des prédictions fiables sur un nouveau jeu de données. On parle de surentraînement (ou d'overfitting).
  
-\begin{exemple} \textit{Wikipedia} ~\\
-\begin{minipage}[c]{.45\linewidth}
+
+\begin{marginfigure}
+\includegraphics[width=\linewidth]{fig_07_overfitting}
+\end{marginfigure}
+
+\begin{exemple} [Wikipedia]
 La ligne verte représente un modèle sur-appris et la ligne noire représente un modèle régulier. La ligne verte classifie trop parfaitement les données d’entraînement, elle généralise mal et donnera de mauvaises prévisions futures avec de nouvelles données. Le modèle vert est donc au final moins bon que le noir.
-\end{minipage} \hfill
-\begin{minipage}[c]{.45\linewidth}
-\begin{center}
-\includegraphics[width=.7\linewidth]{fig_07_overfitting}
-\end{center}
-\end{minipage} 
 \end{exemple}
 
 
