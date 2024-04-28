@@ -335,22 +335,53 @@ Cette fonction doit renvoyer :
 \item le vecteur gradient du coût $E_x = \dfrac{\partial \mathcal{L}}{\partial X}$.
 \end{itemize}
 }
+
+Ainsi, après la phase d'initialisation, en appliquant une succession de phase d'inférence et de rétropopagation, pour chacune des données d'entrainement, et ce, plusieurs fois, on peut faire diminuer la valeur de la fonction de coût total jusqu'à atteindre la précision demandée : 
+$\indice{L}{tot} = \dfrac{1}{N}\sum\limits_{\ell = 1}^{N} \left(t_{\ell}-\Delta_{\ell}\right)^2 = \dfrac{1}{N}
+\sum\limits_{\ell = 1}^{N} L_{\ell}$.
+
+\subsection*{Analyse des résultats}
+L'évolution de la fonction coût total $\indice{L}{tot}$ pendant la phase d'entrainement est donnée sur la figure \ref{Cy_07_ch_02_td_01_fig_19}. Elle comporte 100 itérations. 
+
+
+Le graphique montre que la phase d'entraînement,constituée d'une succession d'inférences et de rétropropagation, a permis de diminuer la fonction coût, c'est-à-dire l'erreur quadratique moyenne entre le résultat $\Delta$ du modèle et les valeurs cibles des données d'entrainement. Il y a désormais peu d'écart pour les données d'entrainement.
+
+\begin{figure}[!h]
+\centering
+XXX
+%\includegraphics[width=.7\linewidth]{fig_19}
+\caption{Entrainement modèle\label{Cy_07_ch_02_td_01_fig_19}}
+\end{figure}
+
+
+\begin{table}[!h]
+\centering
+XXX
+%\includegraphics[width=.7\linewidth]{fig_19}
+\caption{Valeurs optimales du paramètre $\Delta$ pour quatorze combinaisons différentes \label{Cy_07_ch_02_td_01_tab_05}}
+\end{table}
+
+
+Le tableau \ref{Cy_07_ch_02_td_01_tab_05} présente les données d'entraînement et les données de tests, et sa dernière colonne recence les valeurs Delta calculées par le réseau de neurones.
+
+Sur les 14 données disponibles, $N=9$ données sont utilisées lors de la phase d'entrainement et les 5 autres sont reservées comme données tests, afin de tester la robustesse du modèle en soumettant des entrées non utilisées pour la phase d'entrainement, afin de vérifier si la prédiction du modèle est bonne même sur des données nouvelles. 
+
 \ifprof
 \begin{corrige}
 \end{corrige}
 \else
 \fi
 
-% Q31
-\question{ }
+% Q41
+\question{Analyser les résultats. Ce réseau de neurones est-il capable de bien prédire la valeur optimale de $A$. }
 \ifprof
 \begin{corrige}
 \end{corrige}
 \else
 \fi
 
-% Q31
-\question{ }
+% Q42
+\question{Pour améliorer le modèles est-il préférable d'augmenter le nombre d'itérations de l'entrainement ou d'augmenter le nombre de données de tests ? Justifier votre réponse. }
 \ifprof
 \begin{corrige}
 \end{corrige}
