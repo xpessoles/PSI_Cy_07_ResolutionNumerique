@@ -26,13 +26,40 @@ La figure \ref{Cy_07_ch_02_td_01_fig_14} présente le schéma de principe du dis
 
 L'installation étudiée comporte un ensemble box internet-télévision, un système d'éclairage, un radiateur électrique, un chauffe-eau.
 
-*******
+%%%%%%%%%%%%%%
+% QQ questions 
+%%%%%%%%%%%%%
+
+Le dispositif de la figure \ref{Cy_07_ch_02_td_01_fig_14} permet de réduire les pertes
+en ligne engendrées par l’absorption d’un courant impulsionnel. Celles-ci tendent vers leur
+valeur minimale lorsque le paramètre $\Delta$ tend vers 0. Cependant, cette diminution se fait au
+prix d’une augmentation de la fréquence de commutation moyenne fcm et donc des pertes
+au sein du transistor $Tr$ %(cf sous-partie II.4). 
+Si la puissance dissipée dans $Tr$ ne peut pas être
+exploitée, il est alors nécessaire de rechercher une valeur du paramètre $\Delta$ correspondant à
+une minimisation des pertes totales : pertes en ligne + pertes dans $Tr$.
+
+La valeur du paramètre $\Delta$ permettant de minimiser les pertes totales, notée $\indice{\Delta}{opt}$, a été évaluée empiriquement pour quatorze combinaisons entre les différents modes de fonctionnement
+des quatre éléments de l’installation électrique étudiée. Ces valeurs sont présentées dans le
+tableau \ref{Cy_07_ch_02_td_01_tab_03}. Le paramètre $\Delta$ s’exprime en volts et est positif. Lorsque la valeur $-1$ est indiquée
+pour $\indice{\Delta}{opt}$, cela signifie que pour minimiser les pertes totales, il est préférable de désactiver
+le correcteur de facteur de puissance et de connecter l’installation directement au réseau
+électrique.
+
+\begin{table}[!h]
+\centering
+\begin{tabular}{ccccc}
+Box-TV $x_1$ & Eclairage $x_2$ & Radiateur $x_3$ & Chauffe-eau $x_4$ & $\indice{\Delta}{opt}$ (V)
+\end{tabular}
+\end{table}
+
+
 
 \subsection*{Contrôle du paramètre $\Delta$ avec un réseau de neurones}
 Il faut mettre en place un contrôleur capable de fournir la consigne $\indice{\Delta}{opt}$\sidenote{A VERIFIER} en fonction des différentes combinaisons $\left(x_1, x_2, x_3, x_4 \right)$. Le contrôleur associé au correcteur de facteur de puissance doit permettre en temps réel de : 
 \begin{itemize}
 \item soit de désactiver le correcteur de facteur de puissance en connectant l'installation électrique du studio au réseau électrique (cas $\Delta = -1$ \sidenote{a vérifier});
-\item soit de fixer de la valeur du paramètre $\Delta$ lorsque le correcteur de facteur de puissance est activé.
+\item soit de fixer la valeur du paramètre $\Delta$ lorsque le correcteur de facteur de puissance est activé.
 \end{itemize}
 
 \begin{marginfigure}
