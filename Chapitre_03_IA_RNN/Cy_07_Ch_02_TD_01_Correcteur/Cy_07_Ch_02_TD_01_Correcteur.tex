@@ -22,9 +22,26 @@ Le correcteur de facteur de puissance est utilisé pour minimiser les pertes en 
 \includegraphics[width=.9\linewidth]{fig_14}
 \caption{ Correcteur de facteur de puissance utilisé pour une installation domestique\label{Cy_07_ch_02_td_01_fig_14}}
 \end{figure}
-La figure \ref{Cy_07_ch_02_td_01_fig_14} présente le schéma de principe du dispositif complet : la tension aux bornes du condensateur $C$ est placée en entrée de l'association d'un onduleur de tension et de l'installation électrique du studio. Une boucle de régulation permet de réguler cette tensioà une valeur constante. 
+La figure \ref{Cy_07_ch_02_td_01_fig_14} présente le schéma de principe du dispositif complet : la tension aux bornes du condensateur $C$ est placée en entrée de l'association d'un onduleur de tension et de l'installation électrique du studio. Une boucle de régulation permet de réguler cette tension à une valeur constante. 
 
 L'installation étudiée comporte un ensemble box internet-télévision, un système d'éclairage, un radiateur électrique, un chauffe-eau.
+
+Chacun des quatre éléments de l'installation électrique considérée présente trois modes de fonctionnement. Un niveau $x_i$ vallant 0, 1 ou 2 est associé à chacun de ces modes. Le tableau \ref{Cy_07_ch_02_td_01_tab_02} donne la correspondance entre le niveau $x_i$ et le mode de fonctionnement de chaque élément. Certaines des puissances consommées par l'élément correspondant sont également données.
+
+
+\begin{table*}[!h]
+\centering
+\begin{tabular}{cp{3cm}p{3.5cm}p{3.5cm}p{3.5cm}}
+\hline
+& Box-TV $x_1$ & Eclairage $x_2$ & Radiateur $x_3$ & Chauffe-eau $x_4$  \\
+\hline
+$x_i = 0$ & éteint, $\SI{0}{W}$	& éteint, $\SI{0}{W}$	& éteint, $\SI{0}{W}$	& éteint, $\SI{0}{W}$ \\
+$x_i = 1$ & veille, $\SI{100}{W}$	& puissance moitié, $\SI{50}{W}$	& puissance moitié & maintient à température \SI{50}{W}	\\
+$x_i = 2$ & allumé, $\SI{200}{W}$	& puissance maximale, $\SI{100}{W}$	& puissance maximale & puissance maximale \\
+\hline
+\end{tabular}
+\caption{Modes de fonctionnement \label{Cy_07_ch_02_td_01_tab_02}}
+\end{table*}
 
 %%%%%%%%%%%%%%
 % QQ questions 
@@ -49,8 +66,28 @@ le correcteur de facteur de puissance et de connecter l’installation directeme
 \begin{table}[!h]
 \centering
 \begin{tabular}{ccccc}
-Box-TV $x_1$ & Eclairage $x_2$ & Radiateur $x_3$ & Chauffe-eau $x_4$ & $\indice{\Delta}{opt}$ (V)
+\hline
+Box-TV $x_1$ & Eclairage $x_2$ & Radiateur $x_3$ & Chauffe-eau $x_4$ & $\indice{\Delta}{opt}$ (V) \\
+\hline
+0 	& 0 	& 0 	& 1 	& $-1$ \\
+0 	& 0	& 1 	& 1	& $-1$ \\
+0 	& 0 	& 2 	& 0 	& $-1$ \\
+0 	& 0 	& 0	& 2	& $-1$ \\
+0 	& 0 	& 1	& 2	& $-1$ \\
+0 	& 1 	& 0	& 0	& 0,18\\
+2	& 2 	& 0	& 0	& 0,32\\
+2	& 2 	& 2	& 0	& 0,49\\
+2	& 2 	& 2	& 2	& $-1$ \\
+\hline
+\hline
+0	& 0 	& 1	& 0	& $-1$ \\
+0	& 0 	& 2	& 1	& $-1$ \\
+0	& 0 	& 2	& 2	& $-1$ \\
+1	& 0 	& 0	& 0 	& 0,22 \\
+2	& 2 	& 1	& 0	& 0,42 \\
+\hline
 \end{tabular}
+\caption{Valeurs optimales du paramètres $\Delta$ pour quatorze combinaisons différentes \label{Cy_07_ch_02_td_01_tab_03}}
 \end{table}
 
 
