@@ -10,10 +10,12 @@ Contrôle du correcteur de facteur de puissance par Intelligence Artificielle \i
 
 \setcounter{question}{0}
 \marginnote{CCINP -- PSI -- 2024 -- Modélisation.}
-\marginnote[1cm]{
-\UPSTIcompetence[2]{A3-08}
-\UPSTIcompetence[2]{C3-03}
-}
+%\marginnote[1cm]{
+%\UPSTIcompetence[2]{A3-08}
+%\UPSTIcompetence[2]{C3-03}
+%}
+\marginnote{\xpComp{NUM}{05}}
+
 
 Le correcteur de facteur de puissance est utilisé pour minimiser les pertes en lignes engendrées par l'installation électrique d'un petit studio. 
 
@@ -33,7 +35,7 @@ Chacun des quatre éléments de l'installation électrique considérée présent
 \centering
 \begin{tabular}{cp{3cm}p{3.5cm}p{3.5cm}p{3.5cm}}
 \hline
-& Box-TV $x_1$ & Eclairage $x_2$ & Radiateur $x_3$ & Chauffe-eau $x_4$  \\
+& Box-TV  -- $x_1$ & Eclairage -- $x_2$ & Radiateur -- $x_3$ & Chauffe-eau -- $x_4$  \\
 \hline
 $x_i = 0$ & éteint, $\SI{0}{W}$	& éteint, $\SI{0}{W}$	& éteint, $\SI{0}{W}$	& éteint, $\SI{0}{W}$ \\
 $x_i = 1$ & veille, $\SI{100}{W}$	& puissance moitié, $\SI{50}{W}$	& puissance moitié & maintient à température \SI{50}{W}	\\
@@ -93,9 +95,9 @@ Box-TV $x_1$ & Eclairage $x_2$ & Radiateur $x_3$ & Chauffe-eau $x_4$ & $\indice{
 
 
 \subsection*{Contrôle du paramètre $\Delta$ avec un réseau de neurones}
-Il faut mettre en place un contrôleur capable de fournir la consigne $\indice{\Delta}{opt}$\sidenote{A VERIFIER} en fonction des différentes combinaisons $\left(x_1, x_2, x_3, x_4 \right)$. Le contrôleur associé au correcteur de facteur de puissance doit permettre en temps réel de : 
+Il faut mettre en place un contrôleur capable de fournir la consigne $\indice{\Delta}{opt}$ en fonction des différentes combinaisons $\left(x_1, x_2, x_3, x_4 \right)$. Le contrôleur associé au correcteur de facteur de puissance doit permettre en temps réel de : 
 \begin{itemize}
-\item soit de désactiver le correcteur de facteur de puissance en connectant l'installation électrique du studio au réseau électrique (cas $\Delta = -1$ \sidenote{a vérifier});
+\item soit de désactiver le correcteur de facteur de puissance en connectant l'installation électrique du studio au réseau électrique (cas $\Delta = -1$);
 \item soit de fixer la valeur du paramètre $\Delta$ lorsque le correcteur de facteur de puissance est activé.
 \end{itemize}
 
@@ -105,7 +107,7 @@ Il faut mettre en place un contrôleur capable de fournir la consigne $\indice{\
 \caption{Entrées-sortie du réseau de neurones\label{Cy_07_ch_02_td_01_fig_15}}
 \end{marginfigure}
 
-Le tableau \ref{Cy_07_ch_02_td_01_tab_03}\sidenote{à récup} nous donne la correspondance entre les états des appareils $x_i$\sidenote{ verif} et le réglage $\Delta$ du correcteur. Les données d'entrainement sont celles qui vont servir à l'entrainmenet du réseau de neurons. Les données de test sont celles qui vont permettre de valider si l'entrainement s'est bien effectué. D'un point de vue système, cela revient à chercher la relation entre les données d'entrées $x_i$ et la sortie $\Delta$ (figure \ref{Cy_07_ch_02_td_01_fig_15}). 
+Le tableau \ref{Cy_07_ch_02_td_01_tab_03} nous donne la correspondance entre les états des appareils $x_i$ et le réglage $\Delta$ du correcteur. Les données d'entrainement sont celles qui vont servir à l'entrainmenet du réseau de neurons. Les données de test sont celles qui vont permettre de valider si l'entrainement s'est bien effectué. D'un point de vue système, cela revient à chercher la relation entre les données d'entrées $x_i$ et la sortie $\Delta$ (figure \ref{Cy_07_ch_02_td_01_fig_15}). 
 
 
 L'objectif est de trouver un modèle de comportement qui permet, à partir du tableau \ref{Cy_07_ch_02_td_01_tab_03} de retrouver les valeurs d'entrainement et de prédire les valeurs de tests. 
@@ -177,6 +179,8 @@ def f(x) :
 \else
 \fi
 
+\newpage
+
 \subsection*{Phase d'inférence}
 %
 \marginnote{Notations :
@@ -236,7 +240,7 @@ b_1 \\ b_2 \\ b_3 \\ b_4 \\
 \fi
 
 % Q36
-\question{Ecrire en Python la fonction \lstinline{inference_couche} qui va prendre en argument le vecteur d'entrées noté $X$, la matrice des points notée $W$, le vecteur biais noté $B$ et qui renvoie le vecteur des sorties de la couche noté $A$ \sidenote{xxx}.}
+\question{Ecrire en Python la fonction \lstinline{inference_couche} qui va prendre en argument le vecteur d'entrées noté $X$, la matrice des points notée $W$, le vecteur biais noté $B$ et qui renvoie le vecteur des sorties de la couche noté $A$.}
 \ifprof
 \begin{corrige}
 \end{corrige}
@@ -247,7 +251,7 @@ La figure \ref{Cy_07_ch_02_td_01_fig_18} montre le tracé de la fonction d'activ
 
 \begin{figure}[!h]
 \centering
-XXX
+\includegraphics[width=.9\linewidth]{fig_18}
 %\includegraphics[width=.7\linewidth]{fig_18}
 \caption{Représentation graphique de la fonction sigmoïde $f$ pour $x\in [-20,20]$ (à gauche) et $x\in [-1,1]$ (à droite)\label{Cy_07_ch_02_td_01_fig_18}}
 \end{figure}
@@ -412,16 +416,14 @@ Le graphique montre que la phase d'entraînement,constituée d'une succession d'
 
 \begin{figure}[!h]
 \centering
-XXX
-%\includegraphics[width=.7\linewidth]{fig_19}
+\includegraphics[width=.7\linewidth]{fig_19}
 \caption{Entrainement modèle\label{Cy_07_ch_02_td_01_fig_19}}
 \end{figure}
 
 
 \begin{table}[!h]
 \centering
-XXX
-%\includegraphics[width=.7\linewidth]{fig_19}
+\includegraphics[width=.7\linewidth]{tab_05}
 \caption{Valeurs optimales du paramètre $\Delta$ pour quatorze combinaisons différentes \label{Cy_07_ch_02_td_01_tab_05}}
 \end{table}
 
