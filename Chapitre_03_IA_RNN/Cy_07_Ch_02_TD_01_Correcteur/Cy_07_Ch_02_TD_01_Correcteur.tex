@@ -53,7 +53,7 @@ Le dispositif de la figure \ref{Cy_07_ch_02_td_01_fig_14} permet de réduire les
 en ligne engendrées par l’absorption d’un courant impulsionnel. Celles-ci tendent vers leur
 valeur minimale lorsque le paramètre $\Delta$ tend vers 0. Cependant, cette diminution se fait au
 prix d’une augmentation de la fréquence de commutation moyenne fcm et donc des pertes
-au sein du transistor $Tr$ %(cf sous-partie II.4). 
+au sein du transistor $Tr$. %(cf sous-partie II.4). 
 Si la puissance dissipée dans $Tr$ ne peut pas être
 exploitée, il est alors nécessaire de rechercher une valeur du paramètre $\Delta$ correspondant à
 une minimisation des pertes totales : pertes en ligne + pertes dans $Tr$.
@@ -107,7 +107,7 @@ Il faut mettre en place un contrôleur capable de fournir la consigne $\indice{\
 \caption{Entrées-sortie du réseau de neurones\label{Cy_07_ch_02_td_01_fig_15}}
 \end{marginfigure}
 
-Le tableau \ref{Cy_07_ch_02_td_01_tab_03} nous donne la correspondance entre les états des appareils $x_i$ et le réglage $\Delta$ du correcteur. Les données d'entrainement sont celles qui vont servir à l'entrainmenet du réseau de neurons. Les données de test sont celles qui vont permettre de valider si l'entrainement s'est bien effectué. D'un point de vue système, cela revient à chercher la relation entre les données d'entrées $x_i$ et la sortie $\Delta$ (figure \ref{Cy_07_ch_02_td_01_fig_15}). 
+Le tableau \ref{Cy_07_ch_02_td_01_tab_03} nous donne la correspondance entre les états des appareils $x_i$ et le réglage $\Delta$ du correcteur. Les données d'entrainement sont celles qui vont servir à l'entrainement du réseau de neurones. Les données de test sont celles qui vont permettre de valider si l'entrainement s'est bien effectué. D'un point de vue système, cela revient à chercher la relation entre les données d'entrées $x_i$ et la sortie $\Delta$ (figure \ref{Cy_07_ch_02_td_01_fig_15}). 
 
 
 L'objectif est de trouver un modèle de comportement qui permet, à partir du tableau \ref{Cy_07_ch_02_td_01_tab_03} de retrouver les valeurs d'entrainement et de prédire les valeurs de tests. 
@@ -118,6 +118,12 @@ Pour y ariver, l'idée est d'entrainer un réseau de neurones de manière superv
 \question{Quels sont les avantages et les inconvénients du choix d'un réseau de neurones pour modéliser la commande ?}
 \ifprof
 \begin{corrige}
+Dans la mesure ou le nombre de données d'entrées et le nombre de données d'entrainement semblent faibles, l'utilisation d'un réseau de neurones ne se justifie pas forcément. 
+
+Comme avantage, on peut noter la facilité pour sa mise en oeuvre. 
+
+Comme inconvénient, on peut noter la difficulté pour choisir les différents paramètres (nombre de couches et nombre de neurones par couche).
+
 \end{corrige}
 \else
 \fi
@@ -126,6 +132,7 @@ Pour y ariver, l'idée est d'entrainer un réseau de neurones de manière superv
 \question{L'apprentissage supervisé est-il pertinent ? Justifier votre réponse.}
 \ifprof
 \begin{corrige}
+Dans la mesure où les données d'entrainement sont étiquétes, l'apprentissage supervisé est donc naturel.
 \end{corrige}
 \else
 \fi
@@ -175,6 +182,11 @@ def f(x) :
 \question{Calculer la dérivée de la fonction $f$ notée $f'(x)$ et écrire une fonction Python notée \lstinline{f_prime} qui prend en argument $x$ et qui renvoie la dérivée $f'(x)$. L'argument d'entrée $x$ est de type tableau.}
 \ifprof
 \begin{corrige}
+On a $f(x)=(1+e^{-x})^{-1}$ et $f'(x)=(-1)\left(-e^{-x}\right)(1+e^{-x})^{-2} = \dfrac{e^{-x}}{\left(1+e^{-x}\right)^2}$.
+\begin{lstlisting}
+def f_prime(x) :
+    return np.exp(-x)/((1+np.exp(-x))**2)
+\end{lstlisting}
 \end{corrige}
 \else
 \fi
